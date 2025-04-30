@@ -94,9 +94,9 @@ const urls = [
   'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
     code +
     '&start=20250301&end=20250331',
-  // 'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-  //   code +
-  //   '&start=20240401&end=20240430',
+  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
+    code +
+    '&start=20250401&end=20250430',
   //   'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
   //   code +
   //   '&start=20240501&end=20240531',
@@ -105,7 +105,7 @@ const urls = [
   //   '&start=20240601&end=20240630' //+
   'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
     code +
-    '&start=20250401&end=' + getYYMMDD(0),
+    '&start=20250501&end=' + getYYMMDD(0),
 ];
 
 function convert_array(csv_data) {
