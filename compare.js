@@ -94,63 +94,51 @@ let data_array = [],
   total = 0,
   j = 0;
 
-const urls = [
-  // 'data/24-2/' + code,
-  // 'data/24-3/' + code,
-  // 'data/24-4/' + code,
-  // 'data/24-5/' + code,
-  // 'data/24-6/' + code,
-  // code
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250120&end=20250131',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250201&end=20250228',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250301&end=20250331',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250401&end=20250430',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250501&end=20250531',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250601&end=20250630',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250701&end=' + getYYMMDD(0),
-    // ,
-    // 'data/24-2/' + code2,
-    // 'data/24-3/' + code2,
-    // 'data/24-4/' + code2,
-    // 'data/24-5/' + code2,
-    // 'data/24-6/' + code2,
-  // code2
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-  code2 +
-  '&start=20250120&end=20250131',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-  code2 +
-  '&start=20250201&end=20250228',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code2 +
-    '&start=20250301&end=20250331',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code2 +
-    '&start=20250401&end=20250430',
-    'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code2 +
-    '&start=20250501&end=20250531',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code2 +
-    '&start=20250601&end=20250630',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code2 +
-    '&start=20250701&end=' + getYYMMDD(0),
-];
+const urls = [];
+function getPollenApiUrls(cityCode) {
+  const today = new Date(); // 現在の日付を取得
+
+  // 現在の月を含む、年初来のURL配列を生成
+  for (let i = 0; i < today.getMonth() + 1; i++) {
+    let endDate;
+    let startDate;
+
+    if (i === 0) { // 現在の月
+      endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    } else { // 過去の月
+      // 現在の月の1日 - iヶ月の日付を取得
+      const tempDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
+      endDate = new Date(tempDate.getFullYear(), tempDate.getMonth() + 1, 0); // その月の最終日
+      startDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), 1); // その月の1日
+    }
+
+    // APIの最大取得期間（31日）を超えないように調整
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 31) {
+      startDate = new Date(endDate);
+      startDate.setDate(endDate.getDate() - 30); // 31日分（今日から遡って30日前）
+    }
+
+    const startYear = startDate.getFullYear();
+    const startMonth = String(startDate.getMonth() + 1).padStart(2, '0');
+    const startDay = String(startDate.getDate()).padStart(2, '0');
+    const startDateStr = `${startYear}${startMonth}${startDay}`;
+
+    const endYear = endDate.getFullYear();
+    const endMonth = String(endDate.getMonth() + 1).padStart(2, '0');
+    const endDay = String(endDate.getDate()).padStart(2, '0');
+    const endDateStr = `${endYear}${endMonth}${endDay}`;
+
+    const url = `https://wxtech.weathernews.com/opendata/v1/pollen?citycode=${cityCode}&start=${startDateStr}&end=${endDateStr}`;
+    
+    urls.unshift(url); 
+  }
+  get_data();
+  //return urls;
+}
 
 function convert_array(csv_data) {
   const data_string = csv_data.split('\n');
@@ -188,4 +176,5 @@ async function get_data() {
     .then(() => draw_data());
 }
 
-get_data();
+getPollenApiUrls(code2);
+getPollenApiUrls(code);
