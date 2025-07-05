@@ -135,7 +135,7 @@ function getPollenApiUrls(flag,cityCode) {
     const url = `https://wxtech.weathernews.com/opendata/v1/pollen?citycode=${cityCode}&start=${startDateStr}&end=${endDateStr}`;
     
     urls.unshift(url); 
-  }
+  }alert
   if(flag == 'yes') {
     get_data();
   }
