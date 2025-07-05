@@ -122,7 +122,7 @@ function getPollenApiUrls(cityCode) {
     
     // 生成したURLを配列の先頭に追加することで、結果的に古い順になる
     urls.unshift(url); 
-  }
+  }alert(urls);
   return urls;
 }
 
@@ -158,5 +158,5 @@ async function get_data() {
     .then(() => draw_data());
 }
 
-getPollenApiUrls(code);alert(urls);
+getPollenApiUrls(code);
 get_data();
