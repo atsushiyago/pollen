@@ -151,6 +151,8 @@ function draw_data() {
 }
 
 async function get_data() {
+  getPollenApiUrls(code);
+
   Promise.all(
     urls.map((target) => fetch(target).then((result) => result.text()))
   )
@@ -158,5 +160,4 @@ async function get_data() {
     .then(() => draw_data());
 }
 
-getPollenApiUrls(code);
 get_data();
