@@ -79,34 +79,7 @@ let data_array = [],
   total = 0,
   j = 0;
 
-const urls = [
-  // 'data/24-2/' + code,
-  // 'data/24-3/' + code,
-  // 'data/24-4/' + code,
-  // 'data/24-5/' + code,
-  // 'data/24-6/' + code,
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250120&end=20250131',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250201&end=20250228',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250301&end=20250331',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250401&end=20250430',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250501&end=20250531',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250601&end=20250630',
-  'https://wxtech.weathernews.com/opendata/v1/pollen?citycode=' +
-    code +
-    '&start=20250701&end=' + getYYMMDD(0),
-];
+const urls = [];
 
 function convert_array(csv_data) {
   const data_string = csv_data.split('\n');
@@ -141,7 +114,6 @@ async function get_data() {
 }
 
 function getPollenApiUrls(cityCode) {
-  const urls = [];
   const today = new Date(); // 現在の日付を取得
 
   // 現在の月を含む、過去7ヶ月分のURLを生成する例
