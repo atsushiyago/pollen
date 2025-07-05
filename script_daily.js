@@ -85,7 +85,7 @@ function getPollenApiUrls(cityCode) {
   const today = new Date(); // 現在の日付を取得
 
   // 現在の月を含む、過去7ヶ月分のURLを生成する例
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 3; i++) {
     let endDate;
     let startDate;
 
