@@ -95,7 +95,7 @@ let data_array = [],
   j = 0;
 
 const urls = [];
-function getPollenApiUrls(cityCode) {
+function getPollenApiUrls(flag,cityCode) {
   const today = new Date(); // 現在の日付を取得
 
   // 現在の月を含む、年初来のURL配列を生成
@@ -136,7 +136,9 @@ function getPollenApiUrls(cityCode) {
     
     urls.unshift(url); 
   }
-  get_data();
+  if(flag == 'yes') {
+    get_data();
+  }
   //return urls;
 }
 
@@ -176,5 +178,5 @@ async function get_data() {
     .then(() => draw_data());
 }
 
-getPollenApiUrls(code2);
-getPollenApiUrls(code);
+getPollenApiUrls('no',code2);
+getPollenApiUrls('yes',code);
