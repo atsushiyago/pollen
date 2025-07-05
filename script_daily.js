@@ -165,5 +165,5 @@ async function get_data() {
     .then(() => draw_data());
 }
 
-getPollenApiUrls();
+getPollenApiUrls(code);
 get_data();
