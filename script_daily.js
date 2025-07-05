@@ -140,4 +140,58 @@ async function get_data() {
     .then(() => draw_data());
 }
 
+function getPollenApiUrls(cityCode) {
+  const urls = [];
+  const today = new Date(); // 現在の日付を取得
+
+  // 現在の月を含む、過去7ヶ月分のURLを生成する例
+  // 例: 現在が2025年7月の場合、2025年7月, 6月, 5月, 4月, 3月, 2月, 1月分のURLを生成
+  for (let i = 0; i < 7; i++) {
+    let endDate;
+    let startDate;
+
+    if (i === 0) { // 現在の月
+      endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+    } else { // 過去の月
+      // 現在の月の1日 - iヶ月の日付を取得
+      // 例: 7月1日 - 1ヶ月 = 6月1日
+      const tempDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
+      endDate = new Date(tempDate.getFullYear(), tempDate.getMonth() + 1, 0); // その月の最終日
+      startDate = new Date(tempDate.getFullYear(), tempDate.getMonth(), 1); // その月の1日
+    }
+
+    // APIの最大取得期間（31日）を超えないように調整
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 31) {
+      startDate = new Date(endDate);
+      startDate.setDate(endDate.getDate() - 30); // 31日分（今日から遡って30日前）
+    }
+
+    const startYear = startDate.getFullYear();
+    const startMonth = String(startDate.getMonth() + 1).padStart(2, '0');
+    const startDay = String(startDate.getDate()).padStart(2, '0');
+    const startDateStr = `${startYear}${startMonth}${startDay}`;
+
+    const endYear = endDate.getFullYear();
+    const endMonth = String(endDate.getMonth() + 1).padStart(2, '0');
+    const endDay = String(endDate.getDate()).padStart(2, '0');
+    const endDateStr = `${endYear}${endMonth}${endDay}`;
+
+    const url = `https://wxtech.weathernews.com/opendata/v1/pollen?citycode=${cityCode}&start=${startDateStr}&end=${endDateStr}`;
+    urls.push(url);
+  }
+  return urls;
+}
+
+// 使用例
+const cityCode = 'YOUR_CITY_CODE'; // 適切なcitycodeに置き換えてください
+const pollenUrls = getPollenApiUrls(cityCode);
+pollenUrls.forEach(url => {
+  console.log(url);
+});
+
+getPollenApiUrls(code)
 get_data();
