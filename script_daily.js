@@ -154,16 +154,9 @@ function getPollenApiUrls(cityCode) {
 
     const url = `https://wxtech.weathernews.com/opendata/v1/pollen?citycode=${cityCode}&start=${startDateStr}&end=${endDateStr}`;
     urls.push(url);
-  }
+  }alert(urls);
   return urls;
 }
 
-// 使用例
-const cityCode = 'YOUR_CITY_CODE'; // 適切なcitycodeに置き換えてください
-const pollenUrls = getPollenApiUrls(cityCode);
-pollenUrls.forEach(url => {
-  console.log(url);
-});
-
-getPollenApiUrls(code)
+getPollenApiUrls(code);
 get_data();
