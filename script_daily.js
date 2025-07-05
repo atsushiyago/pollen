@@ -1,10 +1,6 @@
 const query = new URL(document.location).searchParams;
 const code = query.get('code');
 
-// alert(
-//   'データ更新のため1日の早朝まで日ごとのグラフの更新をお休みさせていただきます'
-// );
-
 document.getElementById('header').innerHTML =
   '<b>' +
   array[array.indexOf(code) - 1] +
@@ -83,7 +79,7 @@ const urls = [];
 function getPollenApiUrls(cityCode) {
   const today = new Date(); // 現在の日付を取得
 
-  // 現在の月を含む、年初来のURLを生成
+  // 現在の月を含む、年初来のURL配列を生成
   for (let i = 0; i < today.getMonth() + 1; i++) {
     let endDate;
     let startDate;
@@ -119,7 +115,6 @@ function getPollenApiUrls(cityCode) {
 
     const url = `https://wxtech.weathernews.com/opendata/v1/pollen?citycode=${cityCode}&start=${startDateStr}&end=${endDateStr}`;
     
-    // 生成したURLを配列の先頭に追加することで、結果的に古い順になる
     urls.unshift(url); 
   }
   get_data();
