@@ -122,8 +122,9 @@ function getPollenApiUrls(cityCode) {
     
     // 生成したURLを配列の先頭に追加することで、結果的に古い順になる
     urls.unshift(url); 
-  }alert(urls);
-  return urls;
+  }
+  get_data();
+  //return urls;
 }
 
 function convert_array(csv_data) {
@@ -151,8 +152,6 @@ function draw_data() {
 }
 
 async function get_data() {
-  getPollenApiUrls(code);
-
   Promise.all(
     urls.map((target) => fetch(target).then((result) => result.text()))
   )
@@ -160,4 +159,4 @@ async function get_data() {
     .then(() => draw_data());
 }
 
-get_data();
+getPollenApiUrls(code);
