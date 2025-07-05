@@ -126,13 +126,6 @@ function getPollenApiUrls(cityCode) {
   return urls;
 }
 
-// 使用例
-const cityCode = 'YOUR_CITY_CODE'; // 適切なcitycodeに置き換えてください
-const pollenUrls = getPollenApiUrls(cityCode);
-pollenUrls.forEach(url => {
-  console.log(url);
-});
-
 function convert_array(csv_data) {
   const data_string = csv_data.split('\n');
   for (let i = 0; i < data_string.length - 1; i++) {
