@@ -2,14 +2,11 @@
 const query = new URL(document.location).searchParams;
 const code = query.get('code');
 
-// ヘッダーとフッターの設定（この部分はパフォーマンスに影響しないので変更なし）
+// ヘッダーとフッターの設定
+// arr.js で定義されている 'array' を使用
 document.getElementById('header').innerHTML =
   '<b>' +
-  // arrayの定義がないため、ここでは仮にcityNamesMapを使用すると仮定します
-  // 実際にはarrayがどこかで定義されているはずです
-  // array[array.indexOf(code) - 1] の代わりに、もしcityNamesMapのようなものがあればそれを使います
-  // 例: cityNamesMap.get(code) || '指定地域'
-  (window.cityNamesMap ? window.cityNamesMap.get(code) : code) + // cityNamesMapが定義されていればそれを使う
+  array[array.indexOf(code) - 1] + // arrayを利用して都市名を取得
   'の花粉飛散数グラフ（2025年の日ごと）</b><br><a href="hourly?code=' +
   code +
   '">1時間ごとのグラフはこちらを押してください</a>';
@@ -97,7 +94,6 @@ function getPollenApiUrls(cityCode) {
     }
 
     // APIの最大取得期間（31日）を超えないように調整
-    // 現在のロジックでは不要ですが、保険として残す場合はそのまま
     const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -143,11 +139,11 @@ function processCsvData(csv_data) {
     const parts = line.split(',');
     if (parts.length < 3) continue; // データが不完全な行をスキップ
 
-    const dateStr = parts[0]; // YYYYMMDDHH形式
+    const dateStr = parts[0]; //YYYYMMDDHH形式
     const pollenValue = parseInt(parts[2], 10); // 花粉飛散数
 
     // 日付をYYYYMMDD形式に変換してマップのキーとする
-    const dateKey = dateStr.substring(0, 8); // YYYYMMDD
+    const dateKey = dateStr.substring(0, 8); //YYYYMMDD
     const dateObj = new Date(
       parseInt(dateKey.substring(0, 4)),
       parseInt(dateKey.substring(4, 6)) - 1, // 月は0から始まるため-1
@@ -257,15 +253,3 @@ async function initPollenChart() {
 
 // ページロード時に実行
 initPollenChart();
-
-// --- 補足: arrayの定義について ---
-// あなたの元のコードに `array` がどこかで定義されているはずですが、
-// ここに提示されたコードブロックには含まれていませんでした。
-// もし `array` が都市コードと都市名のペアである場合、以下のようなMapを定義すると便利です。
-// 例:
-// const cityNamesMap = new Map([
-//   ['130010', '東京都'],
-//   ['270010', '大阪府'],
-//   // ... その他の都市コードと都市名
-// ]);
-// window.cityNamesMap = cityNamesMap; // グローバルにアクセスできるようにする場合
