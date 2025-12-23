@@ -25,7 +25,7 @@ function getMMDD(day) {
   // 観測期間外は終了日を記載（年表記に注意！
   const dt = new Date('June 30, 2025');
   //const dt = new Date();
-  dt.setDate(dt.getDate() - day);
+  //dt.setDate(dt.getDate() - day);
   const y = dt.getFullYear();
   const m = ('00' + (dt.getMonth() + 1)).slice(-2);
   const d = ('00' + dt.getDate()).slice(-2);
