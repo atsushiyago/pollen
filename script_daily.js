@@ -81,7 +81,7 @@ function getPollenApiUrls(cityCode) {
 
   // 現在の月を含む、年初来のURL配列を生成
   // for (let i = 0; i < today.getMonth() + 1; i++) {
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 9; i++) {
     let endDate;
     let startDate;
 
