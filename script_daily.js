@@ -23,8 +23,8 @@ function getYYMMDD(day) {
 
 function getMMDD(day) {
   // 観測期間外は終了日を記載（年表記に注意！
-  // const dt = new Date('June 30, 2024');
-  const dt = new Date();
+  const dt = new Date('June 30, 2025');
+  //const dt = new Date();
   dt.setDate(dt.getDate() - day);
   const y = dt.getFullYear();
   const m = ('00' + (dt.getMonth() + 1)).slice(-2);
@@ -114,8 +114,8 @@ function getPollenApiUrls(cityCode) {
     const endDateStr = `${endYear}${endMonth}${endDay}`;
 
     const url = `https://wxtech.weathernews.com/opendata/v1/pollen?citycode=${cityCode}&start=${startDateStr}&end=${endDateStr}`;
-    
-    urls.unshift(url); 
+
+    urls.unshift(url);
   }
   get_data();
   //return urls;
